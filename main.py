@@ -23,8 +23,6 @@ if data_file.is_file():
 else:
     with app.app_context():
         db.create_all()
-
-# reading db file
 all_books = []
 
 
@@ -57,8 +55,7 @@ def edit_rating(our_id):
     if request.method == 'POST':
         new_rating = request.form['change_rating']
         with app.app_context():
-            rating = db.session.execute(db.select(Book).where(Book.id == our_id)).scalar()
-            rating_to_update = db.session.execute(db.select(Book).where(Book.rating == rating.rating)).scalar()
+            rating_to_update = db.session.execute(db.select(Book).where(Book.id == our_id)).scalar()
             rating_to_update.rating = new_rating
             db.session.add(rating_to_update)
             db.session.commit()
